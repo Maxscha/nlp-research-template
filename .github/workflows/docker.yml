@@ -39,10 +39,10 @@ jobs:
           password: ${{secrets.DOCKER_TOKEN }}
       - 
         name: Get torch version
-        run: echo "TORCH_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name: pytorch$' | tail -n1 | grep -Eo [0-9]+.[0-9]+.[0-9]+)" >> $GITHUB_ENV
+        run: echo TORCH_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name: pytorch$' | tail -n1 | grep -Eo [0-9]+.[0-9]+.[0-9]+) >> $GITHUB_ENV
       - 
         name: Get cuda version
-        run: echo "CUDA_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name: pytorch-cuda$' | tail -n1 | grep -Eo [0-9]+.[0-9]+)" >> $GITHUB_ENV
+        run: echo CUDA_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name: pytorch-cuda$' | tail -n1 | grep -Eo [0-9]+.[0-9]+) >> $GITHUB_ENV
       -
         name: Build and push
         uses: docker/build-push-action@v4

@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - Dockerfile
-      - conda-lock.yml
-      - ppc64le.conda-lock.yml
+    # paths:
+    #   - Dockerfile
+    #   - conda-lock.yml
+    #   - ppc64le.conda-lock.yml
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -20,6 +20,7 @@ jobs:
           remove-haskell: "true"
           remove-android: "true"
           overprovision-lvm: "true"
+          remove-docker-images: "true"
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up QEMU

@@ -137,3 +137,4 @@ RUN micromamba config set show_banner false --env
 
 # Use our environment `research` as default
 ENV ENV_NAME=research
+

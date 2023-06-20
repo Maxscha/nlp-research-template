@@ -29,7 +29,7 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
-          registry: ${{secrets.GITLAB_REGISTRY}}
+          # registry: ${{secrets.GITLAB_REGISTRY}}
           username: ${{secrets.GITLAB_USERNAME }}
           password: ${{secrets.GITLAB_TOKEN }}
       - name: Get torch version
@@ -38,11 +38,24 @@ jobs:
       - name: Get cuda version
         run: "echo CUDA_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name:
           pytorch-cuda$' | tail -n1 | grep -Eo [0-9]+.[0-9]+) >> $GITHUB_ENV"
-      - name: Build and push
+      - name: Build and push AMD
         uses: docker/build-push-action@v4
         with:
           context: .
           platforms: linux/amd64
-          no-cache: true
           push: true
-          tags: ${{secrets.GITLAB_TAG}}:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}
+          tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_amd
+      - name: Build and push PPC
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/ppc64le
+          push: true
+          tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_ppc64le
+      - name: Build and push PPC
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms:  linux/amd64,linux/ppc64le
+          push: true
+          tags: maxscha/docker_test:latest

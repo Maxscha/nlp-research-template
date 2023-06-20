@@ -45,4 +45,4 @@ jobs:
           platforms: linux/amd64
           no-cache: true
           push: true
-          tags: ${{GITLAB_TAG}}:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}
+          tags: ${{secrets.GITLAB_TAG}}:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}

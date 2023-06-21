@@ -48,6 +48,8 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_amd
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Build and push PPC
         uses: docker/build-push-action@v4
         with:
@@ -55,6 +57,8 @@ jobs:
           platforms: linux/ppc64le
           push: true
           tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_ppc64le
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Build and push PPC
         uses: docker/build-push-action@v4
         with:
@@ -62,3 +66,5 @@ jobs:
           platforms:  linux/amd64,linux/ppc64le
           push: true
           tags: maxscha/docker_test:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

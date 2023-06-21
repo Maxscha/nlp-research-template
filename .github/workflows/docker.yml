@@ -41,6 +41,15 @@ jobs:
       - name: Get cuda version
         run: "echo CUDA_VERSION=$(cat conda-lock.yml | grep -E -A 4 'name:
           pytorch-cuda$' | tail -n1 | grep -Eo [0-9]+.[0-9]+) >> $GITHUB_ENV"
+      - name: Build and push PPC
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          platforms: linux/ppc64le
+          push: true
+          tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_ppc64le #This is wrong, but it's just a test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Build and push AMD
         uses: docker/build-push-action@v4
         with:
@@ -50,16 +59,7 @@ jobs:
           tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_amd
           cache-from: type=gha
           cache-to: type=gha,mode=max
-      - name: Build and push PPC
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          platforms: linux/ppc64le
-          push: true
-          tags: maxscha/docker_test:pytorch-${{env.TORCH_VERSION}}-cuda${{env.CUDA_VERSION}}_ppc64le
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-      - name: Build and push PPC
+      - name: Build and push Both
         uses: docker/build-push-action@v4
         with:
           context: .
